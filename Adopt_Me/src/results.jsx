@@ -7,9 +7,10 @@ const Results = ({ pets }) => {
         <h1>No Pets Found</h1>
       ) : (
         pets.map((pet) => (
+          // eslint-disable-next-line react/jsx-key
           <Pet
             animal={pet.animal}
-            key={pet.id}
+            id={pet.id}
             name={pet.name}
             breed={pet.breed}
             images={pet.images}
