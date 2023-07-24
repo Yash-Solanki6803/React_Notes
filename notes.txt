@@ -1,0 +1,128 @@
+React Setup :
+
+- Install Node.js
+
+- Install React
+
+//inside Index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+
+//inside App.js
+
+    import React from 'react';
+    import './App.css';
+
+    function App() {
+      return (
+        <div className="App">
+          <h1>React App</h1>
+        </div>
+      );
+    }
+
+export default App;
+
+//inside App.css
+
+    .App {
+      text-align: center;
+    }
+
+//inside index.css
+
+    body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: sans-serif;
+    }
+
+
+//props
+
+    Passing props into a component
+
+    const Book = (props) => {
+      return (
+        <article>
+          <Image img={props.img} />
+          <Title title={props.title} />
+          <Author author={props.author} />
+        </article>
+      );
+    };
+
+    const BookList = () => {
+      return (
+        <section className="booklist">
+          <Book img = {src} title = "Book Title  author = {book.author} " />
+        </section>
+      );
+    };
+        //both these component can be in different files and the book component can be imported into the booklist component
+
+//destructuring props
+
+    const Book = (props) => {
+      const { img, title, author } = props;
+      return (
+        <article>
+          <img src={img} alt="" />
+          <h1>{title}</h1>
+          <h4>{author}</h4>
+        </article>
+      );
+    };
+
+    or
+
+    const Book = ({ img, title, author }) => {
+      return (
+        <article>
+          <img src={img} alt="" />
+          <h1>{title}</h1>
+          <h4>{author}</h4>
+        </article>
+      );
+    };
+
+//children props
+
+    const BookList = () => {
+      return (
+        <section className="booklist">
+          <Book img = {src} title = "Book Title  author = {book.author} ">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              voluptatum, quibusdam, quia, quae voluptate voluptas quod dolorum
+              voluptatibus quos natus quidem? Quisquam, quibusdam, quia, quae
+              voluptate voluptas quod dolorum voluptatibus quos natus quidem?
+            </p>
+          </Book>
+        </section>
+      );
+    };
+
+    const Book = ({ img, title, author, children }) => {
+      return (
+        <article>
+          <img src={img} alt="" />
+          <h1>{title}</h1>
+          <h4>{author}</h4>
+          {children} //Lorem ...
+        </article>
+      );
+    }; 
