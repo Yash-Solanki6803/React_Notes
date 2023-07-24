@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 
+const titles = [
+  "Oyy",
+  "Hii",
+  "Hello",
+  "Bonjour",
+  "Kem Cho",
+  "Tiger Zinda Hai",
+  "Nikel lodian",
+  "Brrr",
+  "Sync Error",
+  "Khatammm",
+];
+
+export const random_array = titles;
+
 const UseStateBasics = () => {
   const [text, setText] = useState("random title");
-  const titles = [
-    "ffo",
-    "baar",
-    "asdasd",
-    "werw",
-    "effa",
-    "aefff",
-    "dfdff",
-    "adfff",
-    "assd",
-    "qwee",
-  ];
 
   const handleClick = () => {
     const idx = Math.floor(Math.random() * 10);
