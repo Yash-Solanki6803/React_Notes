@@ -126,3 +126,20 @@ export default App;
         </article>
       );
     }; 
+
+
+//useState .
+
+  Keep a value between renders and trigger a re-render when it changes.
+
+  It is a function that returns an array.
+
+  [undefined , function]
+
+  const [count, setCount] = useState(0);
+  Here the parameter of the useState func is the default value.
+
+  setCount is a function that is used to change the value of count and whenever this function is called the component is re-rendered.
+
+  NOTE : INORDER TO USE ANY HOOK THE COMPONENT MUST BE START WITH CAPITAL LETTER.
+

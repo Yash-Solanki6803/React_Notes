@@ -1,0 +1,45 @@
+start with creating src folder
+
+create index.html , stylesheet and App.js files
+
+Open terminal in the folder and run " npm init -y "
+
+run " npm i -D prettier @2.7.1"
+
+make file ".prettierrc "
+add {} into file to keep defaults settings.
+
+run "npm i -D eslint@8.24.0 eslint-config-prettier@8.5.0"
+
+make file  " .eslintrc.json " and paste it from previous project.
+
+add :
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+
+    inside the scripts of package.json
+
+setup vite:
+
+    run " npm i -D vite@3.1.4 @vitejs/plugin-react@2.1.0"
+    make file " vite.config.js " 
+        add:
+            import { defineConfig } from "vite";
+            import react from "@votejs/plugin-react";
+
+            export default defineConfig({
+            plugins: [react()],
+            root: "src",
+            });
+
+scripts in package.json :
+    add: 
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "",
+
+run :
+    npm install -D eslint-plugin-import@2.26.0 eslint-plugin-jsx-a11y@6.6.1 eslint-plugin-react@7.31.8
+  
+update eslintrc:
+    
