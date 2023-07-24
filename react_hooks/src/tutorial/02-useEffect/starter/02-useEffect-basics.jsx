@@ -1,20 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 const UseEffectBasics = () => {
-  const [value, setValue] = useState(0);
-  const sayHello = () => {
-    console.log('hello there');
+  const [size, setSize] = useState(window.innerWidth);
+  console.log(size);
+
+  const checkSize = () => {
+    setSize(window.innerWidth);
   };
 
-  sayHello();
+  useEffect(() => {
+    window.addEventListener("resize", checkSize);
+
+    return () => {
+      console.log("Cleanup");
+      window.removeEventListener("resize", checkSize);
+    };
+  });
 
   return (
-    <div>
-      <h1>value : {value}</h1>
-      <button className='btn' onClick={() => setValue(value + 1)}>
-        click me
-      </button>
-    </div>
+    <>
+      <h1>Window</h1>
+      <h2>{size} PX</h2>
+    </>
   );
 };
 export default UseEffectBasics;

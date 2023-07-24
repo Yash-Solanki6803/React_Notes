@@ -143,3 +143,49 @@ export default App;
 
   NOTE : INORDER TO USE ANY HOOK THE COMPONENT MUST BE START WITH CAPITAL LETTER.
 
+  while using setvalue inside a setTimeout we must use  function to change the value .
+
+    eg.: This is wrong"
+          setTimeout(() => {
+            setValue(value + 1);
+          }, 2000);
+
+          This is correct:
+          setTimeout(() => {
+            setValue((currentValue) => {
+              return CurrentValue + 1;
+            });
+          }, 2000);
+
+//useEffect
+
+    By default after every re-render.
+
+
+    useEffect(() => {
+      console.log('useEffect');
+    });
+
+    useEffect(() => {
+      console.log('useEffect');
+    }, [value]);
+
+    here Value is called the list of dependencies and useEffect will only run when the value changes.
+
+    useEffect(() => {
+      console.log('useEffect');
+    }, []);
+
+    here the useEffect will only run once when the component is rendered for the first time.
+
+
+    useEffect has a option to return a function which will be called before the useEffect is called again.
+
+
+    useEffect(() => {
+      console.log('useEffect');//setup code
+      return () => {
+        console.log('cleanup');//cleanup code
+      }});
+
+     Your setup function may also optionally return a cleanup function. When your component is added to the DOM, React will run your setup function. After every re-render with changed dependencies, React will first run the cleanup function (if you provided it) with the old values, and then run your setup function with the new values. After your component is removed from the DOM, React will run your cleanup function.
