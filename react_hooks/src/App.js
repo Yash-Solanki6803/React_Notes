@@ -1,4 +1,4 @@
-import Setup from "./tutorial/03-conditional-rendering/starter/06-toggle-challenge";
+import Setup from "./tutorial/06-forms/starter/01-controlled-inputs";
 
 function App() {
   return (
