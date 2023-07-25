@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const ToggleChallenge = () => {
-  const [show, , setShow] = useState(false);
+  const [show, setShow] = useState(false);
   return (
     <>
       <button className="btn" onClick={() => setShow(!show)}>

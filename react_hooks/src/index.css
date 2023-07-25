@@ -135,8 +135,11 @@ p {
 .section,
 .container {
   width: 90vw;
-  margin: 0 auto;
+  margin: 0 auto 10px;
+  padding: 20px;
+  border-radius: 5px;
   max-width: var(--max-width);
+  box-shadow: 0 0 20px rgba(49, 49, 49, 0.502);
 }
 
 @media screen and (min-width: 992px) {

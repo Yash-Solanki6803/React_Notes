@@ -14,8 +14,8 @@ const UseStateGotcha = () => {
   return (
     <>
       <section style={{ margin: "4rem 0" }}>
-        <h2>Regular Counter</h2>
-        <h1>{value}</h1>
+        <h3>Regular Counter</h3>
+        <h4>{value}</h4>
         <button className="btn" onClick={() => setValue(value - 1)}>
           decrease
         </button>
@@ -27,8 +27,8 @@ const UseStateGotcha = () => {
         </button>
       </section>
       <section style={{ margin: "4rem 0" }}>
-        <h2>More complex Counter</h2>
-        <h1>{value}</h1>
+        <h3>More complex Counter</h3>
+        <h4>{value}</h4>
         <button className="btn" onClick={complexIncrease}>
           Increase Later
         </button>
