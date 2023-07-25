@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 const UseEffectBasics = () => {
   const [size, setSize] = useState(window.innerWidth);
-  console.log(size);
 
   const checkSize = () => {
     setSize(window.innerWidth);
@@ -12,7 +11,6 @@ const UseEffectBasics = () => {
     window.addEventListener("resize", checkSize);
 
     return () => {
-      console.log("Cleanup");
       window.removeEventListener("resize", checkSize);
     };
   });
