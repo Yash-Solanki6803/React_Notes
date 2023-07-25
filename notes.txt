@@ -189,3 +189,26 @@ export default App;
       }});
 
      Your setup function may also optionally return a cleanup function. When your component is added to the DOM, React will run your setup function. After every re-render with changed dependencies, React will first run the cleanup function (if you provided it) with the old values, and then run your setup function with the new values. After your component is removed from the DOM, React will run your cleanup function.
+
+
+// && and ||
+
+    && is used to check if the first value is true then only the second value is returned.
+
+    || is used to check if the first value is false then only the second value is returned.
+
+    eg.:
+
+    const [value, setValue] = useState(0);
+
+    value && <h1>hello world</h1> //if value is true then only the h1 tag is returned.
+
+    value || <h1>hello world</h1> //if value is false then only the h1 tag is returned.
+
+
+//Form control 
+
+  Submit: There are two ways to submit a form.
+  
+      1. Using a onSubmit on the form tag.
+      2. Using a button with type button and using onClick to submit the form.
