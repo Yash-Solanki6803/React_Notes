@@ -1,4 +1,4 @@
-import Setup from "./tutorial/06-forms/starter/01-controlled-inputs";
+import Setup from "./tutorial/06-forms/starter/03-multiple-inputs";
 
 function App() {
   return (

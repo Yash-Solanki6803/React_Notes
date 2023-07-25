@@ -5,6 +5,8 @@ const ControlledInputs = () => {
   const [email, setEmail] = useState("");
   const [people, setPeople] = useState([]);
 
+  // const arr = [firstName, email];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`${firstName}  ${email}`);
@@ -42,6 +44,22 @@ const ControlledInputs = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
+          {/* {arr.forEach((a) => {
+            return (
+              <div className="form-control">
+                <label htmlFor={`"${a}"`}>Email : </label>
+                <input
+                  type="text"
+                  id={`"${a}"`}
+                  name={`"${a}"`}
+                  value={a}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            );
+          })} */}
+
           <button type="submit" onClick={handleSubmit}>
             {" "}
             Add Person
