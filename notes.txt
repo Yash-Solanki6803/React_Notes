@@ -388,6 +388,7 @@ export default App;
       It is used to check the type of the props that are passed to the component.
 
       import PropTypes from 'prop-types';
+      //Import the component but we will use the property inside that component.
 
       const Book = ({ img, title, author, children }) => {
         return (
@@ -403,8 +404,14 @@ export default App;
       Book.propTypes = {
         img: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-
       };
-            
+
+      Book.defaultProps = {
+        title: 'No Title',
+      };
+
+//React Router
+
+      
 
 
