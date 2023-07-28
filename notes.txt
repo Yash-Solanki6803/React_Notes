@@ -446,7 +446,7 @@ export default App;
 
       eg.:
 
-      Inside index.js
+    Inside index.js
 
       import { BrowserRouter as Router,Route,Switch } from 'react-router-dom';
 
@@ -455,6 +455,7 @@ export default App;
       import About from './About';
       import People from './People';
       import Error from './Error';
+      //Error page is  used to setup a 404 page. When the user enters a wrong url then this page will be rendered.
       import Person from './Person';
       
       //navbar
@@ -464,7 +465,11 @@ export default App;
       const ReactRouterSetup = () => {
         return (
           <Router>
+            <Navbar />
             <Switch>
+            //Switch is used to render only one component at a time.
+            //exact is used to match the exact path.
+            //Inside Switch we can have multiple routes. Only the route that matches will be rendered.
               <Route exact path="/">
                 <Home />
               </Route>
@@ -474,6 +479,8 @@ export default App;
               <Route path="/people">
                 <People />
               </Route>
+
+              //:id is used to pass the id as a parameter to the component. This is called URLparameters. Children is used to render the component. 
               <Route path="/person/:id" children={<Person />}></Route>
               <Route path="*">
                 <Error />
@@ -482,3 +489,83 @@ export default App;
           </Router>
         );
       };
+
+    Inside Navbar
+
+      import {Link} from 'react-router-dom';
+
+      const Navbar =()=>{
+        return(
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/people">People</Link>
+              </li>
+            </ul>
+          </nav>
+        )
+      }
+
+      export default Navbar;
+
+  //Using URL parameters and useParams hook.
+
+      <Route path="/person/:id" children={<Person />}></Route>
+      //This is how to set up the route to use URL parameters.
+
+      Inside People.js
+
+      import { Link } from 'react-router-dom';
+
+      const People = () => {
+        const [people, setPeople] = useState(data);
+
+        return (
+          <div>
+            <h1>People Page</h1>
+            {people.map((person) => {
+              return (
+                <div key={person.id} className="item">
+                  <h4>{person.name}</h4>
+                  <Link to={`/person/${person.id}`}>Learn More</Link>
+                    //This will put a link which will get the id and redirect to the person component.
+                </div>
+              );
+            })}
+          </div>
+        );
+      };
+
+
+      Inside Person.js
+
+      import { useParams, Link } from 'react-router-dom';
+
+      const Person = () => {
+        const { id } = useParams();
+        //useParams is used to get the parameters from the url.
+        const [name, setName] = useState('default name');
+        useEffect(() => {
+          const newPerson = data.find((person) => person.id === parseInt(id));
+          setName(newPerson.name);
+        }, []);
+
+        return (
+          <div>
+            <h1>{name}</h1>
+            <Link to="/people" className="btn">
+              Back to People
+            </Link>
+          </div>
+        );
+      };
+
+      export default Person;
+
+      
