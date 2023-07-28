@@ -568,4 +568,89 @@ export default App;
 
       export default Person;
 
+//React performance optimization
+
+      //React.memo
+
+      //React.memo is used to prevent the re-rendering of the component if the props are not changed.
+
+      //It is used like this.
+
+      export default React.memo(ReactComponent);
+
+      //useMemo
+
+      //useMemo is used to prevent the re-rendering of the component if the dependencies are not changed.
+
+      //It is used like this.
+
+      const Component = () => {
+        const [count, setCount] = useState(0);
+        const [item, setItem] = useState(0);
+
+        const complexFunction = (count) => {
+          for (let i = 0; i < 1000000000; i++) {}
+          return count * 2;
+        };
+
+        const complexCount = useMemo(() => {
+          return complexFunction(count);
+        }, [count]);
+
+        return (
+          <div>
+            <h1>{count}</h1>
+            <h1>{complexCount}</h1>
+            <button className="btn" onClick={() => setCount(count + 1)}>
+              Increment Count
+            </button>
+            //We want to re-render the complexCount only when the count is changed. So we pass count as a dependency.
+            <button className="btn" onClick={() => setItem(item + 1)}>
+              Increment Item
+            </button>
+          </div>
+        );
+      };
+
+      export default Component;
+
+      Still  there is a problem with this. When we click on the increment item button the complexCount is also re-rendered. This is because the complexCount is a function and it is re-created every time the component is re-rendered. So we need to use the useCallback hook.
+
+      //useCallback
+
+      //useCallback is used to prevent the re-rendering of the component if the props are not changed.
+
+      //It is used like this.
+
+      const Component = () => {
+        const [count, setCount] = useState(0);
+        const [item, setItem] = useState(0);
+
+        //This way the function is not re-created every time the component is re-rendered. It is only re-created when the dependencies are changed.
+        const complexFunction = useCallback((count) => {
+          for (let i = 0; i < 1000000000; i++) {}
+          return count * 2;
+        }, []);
+
+        const complexCount = useMemo(() => {
+          return complexFunction(count);
+        }, [count]);
+
+        return (
+          <div>
+            <h1>{count}</h1>
+            <h1>{complexCount}</h1>
+            <button className="btn" onClick={() => setCount(count + 1)}>
+              Click Me
+            </button>
+            <button className="btn" onClick={() => setItem(item + 1)}>
+              Click Me
+            </button>
+          </div>
+        );
+      };
+
+      export default Component;
+
+
       
