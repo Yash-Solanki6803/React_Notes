@@ -343,3 +343,68 @@ export default App;
       The provider has a value prop which is used to pass the data to the components.
 
       The provider can be used to pass functions also.
+
+//useFetch
+
+
+      const useFetch = (url) => {
+        const [loading, setLoading] = useState(true);
+        const [tours, setTours] = useState([]);
+
+        const fetchTours = async () => {
+          setLoading(true);
+          try {
+            const response = await fetch(url);
+            const tours = await response.json();
+            setLoading(false);
+            setTours(tours);
+          } catch (error) {
+            setLoading(false);
+            console.log(error);
+          }
+        };
+
+        useEffect(() => {
+          fetchTours();
+        }, [url]);
+        //run the function only when the url changes other wise it will run on every re-render.
+
+        return { loading, tours };
+      };
+
+      export default useFetch;
+
+      This is a custom hook that is used to fetch data from an api.
+
+      It returns the loading state and the data.
+
+      It is used in the component like this.
+
+      const { loading, tours } = useFetch();
+
+
+//propTypes
+
+      It is used to check the type of the props that are passed to the component.
+
+      import PropTypes from 'prop-types';
+
+      const Book = ({ img, title, author, children }) => {
+        return (
+          <article>
+            <img src={img} alt="" />
+            <h1>{title}</h1>
+            <h4>{author}</h4>
+            {children}
+          </article>
+        );
+      };
+
+      Book.propTypes = {
+        img: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+
+      };
+            
+
+
