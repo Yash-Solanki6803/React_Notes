@@ -19,6 +19,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+    Strict mode renders the whole component twice and checks for any errors.
 
 //inside App.js
 
@@ -67,12 +68,12 @@ export default App;
 
     const BookList = () => {
       return (
-        <section className="booklist">
+        <section className="bookList">
           <Book img = {src} title = "Book Title  author = {book.author} " />
         </section>
       );
     };
-        //both these component can be in different files and the book component can be imported into the booklist component
+        //both these component can be in different files and the book component can be imported into the bookList component
 
 //destructuring props
 
@@ -103,13 +104,10 @@ export default App;
 
     const BookList = () => {
       return (
-        <section className="booklist">
+        <section className="bookList">
           <Book img = {src} title = "Book Title  author = {book.author} ">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              voluptatum, quibusdam, quia, quae voluptate voluptas quod dolorum
-              voluptatibus quos natus quidem? Quisquam, quibusdam, quia, quae
-              voluptate voluptas quod dolorum voluptatibus quos natus quidem?
+              Random Text
             </p>
           </Book>
         </section>
@@ -141,9 +139,9 @@ export default App;
 
   setCount is a function that is used to change the value of count and whenever this function is called the component is re-rendered.
 
-  NOTE : INORDER TO USE ANY HOOK THE COMPONENT MUST BE START WITH CAPITAL LETTER.
+  NOTE : IN ORDER TO USE ANY HOOK THE COMPONENT MUST BE START WITH CAPITAL LETTER.
 
-  while using setvalue inside a setTimeout we must use  function to change the value .
+  while using setValue inside a setTimeout we must use  function to change the value .
 
     eg.: This is wrong"
           setTimeout(() => {
@@ -212,3 +210,136 @@ export default App;
   
       1. Using a onSubmit on the form tag.
       2. Using a button with type button and using onClick to submit the form.
+
+//useRef
+
+    preserves the value between renders.
+    Does not trigger re-render
+    Target DOM nodes/elements.
+
+    It is used to reference a DOM element.
+
+    const refContainer = useRef(initialValue);
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(refContainer.current.value);
+    };
+
+    <form className="form" onSubmit={handleSubmit}>
+      <div>
+        <input type="text" ref={refContainer} />
+        <button type="submit">Submit</button>
+      </div>
+    </form> 
+
+//useReducer
+
+     const [state,dispatch] = useReducer(reducer,defaultState);
+
+     reducer is a function that takes in two parameters state and action and returns a new state.
+
+      const reducer = (state, action) => {
+        switch (action.type) {
+          case 'ADD_ITEM':
+            return {
+              ...state,
+              people: [...state.people, action.payload],
+              isModalOpen: true,
+              modalContent: 'item added',
+            };
+          case 'NO_VALUE':
+            return {
+              ...state,
+              isModalOpen: true,
+              modalContent: 'please enter value',
+            };
+          case 'CLOSE_MODAL':
+            return { ...state, isModalOpen: false };
+          case 'REMOVE_ITEM':
+            const newPeople = state.people.filter(
+              (person) => person.id !== action.payload
+            );
+            return { ...state, people: newPeople };
+          default:
+            throw new Error('no matching action type');
+        }
+
+      };
+
+      const defaultState = {
+        people: [],
+        isModalOpen: false,
+        modalContent: '',
+      };
+
+
+      while using dispatch... call it as dispatch({type:'TESTING',payload:newItem})
+
+      payload is the data that is passed to the reducer function.
+
+      when a type matches in reduce only then the state is changed .
+
+      The state can only be changed by using the dispatch function.
+
+//prop drilling
+
+      When the component tree is like this  App->BookList->Book->Image and i want to pass the image to the image component then i have to pass it through all the components. This is called prop drilling.  Where the data is passed through all the components and the components in between do not use the data.
+
+      This can be solved by Context API or Redux.
+
+//Context API
+
+      Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+      const PersonContext = React.createContext();
+      //we get two components back . 1 provider and 1 consumer. Provider works as a distributer and consumer works as a receiver. 
+
+      const PersonProvider = ({ children }) => {
+        const [people, setPeople] = useState(data);
+        const [modalOpen, setModalOpen] = useState(false);
+        const [modalContent, setModalContent] = useState('');
+
+        const removePerson = (id) => {
+          setPeople((people) => {
+            return people.filter((person) => person.id !== id);
+          });
+          setModalOpen(true);
+          setModalContent('item removed');
+        };
+
+        const closeModal = () => {
+          setModalOpen(false);
+        };
+
+        return (
+          //wrapping the return of the provider with the context provider. This provider basically wraps the whole component tree or later we can also wrap the whole app with this provider.
+
+
+          <PersonContext.Provider
+            value={{ people, modalOpen, modalContent, removePerson, closeModal }}
+          >
+            {children}
+          </PersonContext.Provider>
+
+
+        );
+      };
+
+
+      //This useContext gets the value from the provider and we can use it in any component that is wrapped by the provider.
+      const useGlobalContext = () => {
+        return useContext(PersonContext);
+      };
+
+      export { PersonProvider, useGlobalContext };
+
+      In the above code we have created a context and a provider and a custom hook.
+
+      The provider is used to wrap the components that need the data.
+
+      The custom hook is used to use the data in the components.
+
+      The provider has a value prop which is used to pass the data to the components.
+
+      The provider can be used to pass functions also.

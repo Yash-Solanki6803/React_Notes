@@ -3,11 +3,11 @@ import { useState } from "react";
 
 const UseStateArray = () => {
   //states
-  const [person, setPerson] = useState({
-    firstName: "",
-    lastName: "",
-    id: "",
-  });
+  // const [person, setPerson] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   id: "",
+  // });
   const [people, setPeople] = useState([]);
 
   //Random name Array
