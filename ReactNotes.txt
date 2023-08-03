@@ -211,6 +211,32 @@ export default App;
       1. Using a onSubmit on the form tag.
       2. Using a button with type button and using onClick to submit the form.
 
+  //Taking value of input in a form using useState
+
+    const [firstName, setFirstName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(firstName, email);
+    };
+
+    <form className="form" onSubmit={handleSubmit}>
+      <div>
+        <input
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
 //useRef
 
     preserves the value between renders.
@@ -232,6 +258,12 @@ export default App;
         <button type="submit">Submit</button>
       </div>
     </form> 
+
+
+    Applications:
+
+    1. To focus on a input field when the page loads.
+
 
 //useReducer
 
@@ -441,6 +473,13 @@ export default App;
 
       <Link to="/person/1" className="btn">
         More Info
+
+
+      //Navigate
+
+      We can use Navigate component to navigate to a different page..
+      eg.: <Route path="*" element={ <Navigate to="/" /> } >
+           </Route>
 
 
 
@@ -653,4 +692,3 @@ export default App;
       export default Component;
 
 
-      
