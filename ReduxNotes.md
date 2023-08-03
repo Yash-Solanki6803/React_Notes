@@ -7,7 +7,7 @@
 [Redux Docs](https://redux.js.org/introduction/getting-started)   
 [React-Redux Docs](https://react-redux.js.org/introduction/getting-started)  
 [Redux Toolkit Docs](https://redux-toolkit.js.org/introduction/getting-started)  
-[Codeevolution YT tutorial](https://youtu.be/9boMnm5X9ak)
+[Code-evolution YT tutorial](https://youtu.be/9boMnm5X9ak)
 
 
 ### Index
@@ -273,6 +273,40 @@ __Thus Ultimately__ :
 
    
   ```
+  Thus in this method we have split the reducer function into two different functions. Now we have to combine these two functions into one single function. This can be done using the `combineReducers` function from the redux library.
+
+  ```js
+  const rootReducer = combineReducers({
+    cake: cakeReducer,
+    iceCream: iceCreamReducer
+  })
+  ```
+
+  The combineReducers method  accepts an object as an argument and each key value pair in the object is an indivial reducer function. The key of the key value pair will be the name of the reducer function and the value will be the reducer function itself. 
+
+  Now we have to create a store using the rootReducer.
+
+  ```js
+  const store = createStore(rootReducer)
+  ```
+
+  Now the output of the above code will be :
+
+  ```js
+  Initial state { cake: { numOfCakes: 10 }, iceCream: { numOfIceCreams: 20 } }
+  Updated state { cake: { numOfCakes: 9 }, iceCream: { numOfIceCreams: 20 } }
+  Updated state { cake: { numOfCakes: 8 }, iceCream: { numOfIceCreams: 20 } }
+  Updated state { cake: { numOfCakes: 7 }, iceCream: { numOfIceCreams: 19 } }
+  Updated state { cake: { numOfCakes: 6 }, iceCream: { numOfIceCreams: 18 } }
+  ```
+  Thus we can see that the state of the application is changing as we dispatch actions to the store.
+
+  __When the File increases in size you can separate the reducers into different files and then import them into the root reducer file.__
+
+
+  ##Middleware
+
+  
 
 
 
