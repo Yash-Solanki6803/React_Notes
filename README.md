@@ -1,2 +1,2 @@
-# React_By_Brian_Holt
-Course resources by Brian Hold on Frontend Masters
+# React_Notes
+Course resources by Brian Holt on Frontend Masters and Other Notes

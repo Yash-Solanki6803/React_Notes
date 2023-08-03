@@ -10,6 +10,10 @@
 [Codeevolution YT tutorial](https://youtu.be/9boMnm5X9ak)
 
 
+### Index
+
+[React Redux](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#react-redux)
+
 
 ### What is React-Redux?
 
