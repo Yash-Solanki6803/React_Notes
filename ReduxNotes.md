@@ -274,6 +274,8 @@ __Thus Ultimately__ :
 
   __This method is great when we have less number of products or states . But in the long run this will result in a very large reducer function which is hard to read and debug. The other approach is to split the intialState objects .__
 
+
+
   ## Combining reducers
 
   ```js
@@ -324,7 +326,21 @@ __Thus Ultimately__ :
 
   ```js
   const store = createStore(rootReducer)
+
+  console.log('Initial state', store.getState()) // returns the initial state of the application
+
+  const unsubscribe = store.subscribe(() => console.log('Updated state', store.getState()))
+
+  store.dispatch(buyCake())
+  store.dispatch(buyCake())
+  store.dispatch(buyCake())
+  store.dispatch(buyIceCream())
+  store.dispatch(buyIceCream())
+  unsubscribe() // this will unsubscribe the listener from the store
+  
   ```
+  
+
 
   Now the output of the above code will be :
 
@@ -332,18 +348,77 @@ __Thus Ultimately__ :
   Initial state { cake: { numOfCakes: 10 }, iceCream: { numOfIceCreams: 20 } }
   Updated state { cake: { numOfCakes: 9 }, iceCream: { numOfIceCreams: 20 } }
   Updated state { cake: { numOfCakes: 8 }, iceCream: { numOfIceCreams: 20 } }
+  Updated state { cake: { numOfCakes: 7 }, iceCream: { numOfIceCreams: 20 } }
   Updated state { cake: { numOfCakes: 7 }, iceCream: { numOfIceCreams: 19 } }
-  Updated state { cake: { numOfCakes: 6 }, iceCream: { numOfIceCreams: 18 } }
+  Updated state { cake: { numOfCakes: 7 }, iceCream: { numOfIceCreams: 18 } }
   ```
+
+
   Thus we can see that the state of the application is changing as we dispatch actions to the store.
 
   __When the File increases in size you can separate the reducers into different files and then import them into the root reducer file.__
 
 
-  ##Middleware
+  ## Enhancers
 
+  The createStore function accepts three parameters:
+
+  * reducer
+  * preloadedState
+  * enhancer
+
+
+
+  Enhancers are higher-order functions used to enhance the behavior of the Redux store. In contrast to middleware and reducers  , they  have access to all the internal store functions and can be used to extend Redux with custom capabilities.
+
+  One can use store enhancers for:
+
+  * Store synchronization
+  * State persistence
+  * Integration with dev tools
+
+  Lets consider a basic example for calculating the time it takes to deliver a cake to the customer.
+
+  ```js   
+  const initialState = {
+    numOfCakes: 10
+  }
+
+  const reducer = (state = initialState, action) => {
+    switch(action.type) {
+      case BUY_CAKE: return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1
+      }
+      default: return state
+    }
+  }
+
+
+  //logEnhancer is a store enhancer that will calculate the time it takes to deliver a cake to the customer.
+  const logEnhancer = (createStore) => (reducer,initialState,enhancer)=>{
+    
+    const logReducer = (state,action) => {
+      console.log('Order Received', state)
+      const newState = reducer(state,action)
+      console.log('Order Delivered', newState)
+      return newState
+    }
+
+
+    return createStore(logReducer,initialState,enhancer)
+  }
+
+  const store = createStore(reducer,logEnhancer);
+
+  console.log('Initial state', store.getState()) // returns the initial state of the application
+
+  const unsubscribe = store.subscribe(() => console.log('Updated state', store.getState()))
+
+  store.dispatch(buyCake())
+  store.dispatch(buyCake())
+  ```
   
-
 
 
 
