@@ -12,7 +12,14 @@
 
 ### Index
 
-[React Redux](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#react-redux)
+* [What is React-Redux?](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#what-is-react-redux)
+* [Redux ](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#what-is-react-redux)
+    * [Redux pattern](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#redux-pattern)
+    * [Multiple Reducers](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#multiple-reducers)
+    * [Combining Reducers](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#combining-reducers)
+     
+
+* [React Redux](https://github.com/Yash-Solanki6803/React_Notes/blob/main/ReduxNotes.md#react-redux)
 
 
 ### What is React-Redux?
@@ -141,6 +148,7 @@ __Thus Ultimately__ :
       type: BUY_CAKE,
       info: 'First redux action'
     }
+    /*An action must have a  type property and it can have any other number of properties*/
   }
 
   const initialState = {
