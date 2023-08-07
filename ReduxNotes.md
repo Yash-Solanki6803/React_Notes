@@ -143,6 +143,7 @@ __Thus Ultimately__ :
 
   const BUY_CAKE = 'BUY_CAKE'
 
+  //Here buyCake() is an action creator
   function buyCake() {
     return {
       type: BUY_CAKE,
@@ -171,7 +172,7 @@ __Thus Ultimately__ :
 
   console.log('Initial state', store.getState()) // returns the initial state of the application
 
-  //Now we register a listener to the store so that we can see the changes in the state of the application
+  //Now we register a listener to the store so that we can see the changes in the state of the application. This function will be called whenever the state of the application changes.
 
   const unsubscribe = store.subscribe(() => console.log('Updated state', store.getState()))
 
@@ -191,6 +192,33 @@ __Thus Ultimately__ :
   Updated state { numOfCakes: 7 }
   ```
   Thus we can see that the state of the application is changing as we dispatch actions to the store.
+
+  ## Bind Action Creators
+
+  As you might have realised , using store.dispatch() to dispatch an action every time is a bit cumbersome. So we use action creators to create action objects. But we still have to dispatch the action object using store.dispatch().
+
+  To avoid this we use bindActionCreator() function provided by redux. This function takes the store.dispatch() method as a parameter and binds the action creators to it and returns the object with the same keys but with every action creator wrapped into a dispatch call so they may be invoked directly.
+
+  ```js
+  import {bindActionCreators} from 'redux'
+
+  const actionCreators = {
+    buyCake: buyCake,
+    buyIceCream: buyIceCream
+  }
+
+  const actions= bindActionCreators(actionCreators, store.dispatch)
+
+  ```
+  Now we can dispatch actions directly as follows:
+
+  ```js
+  actions.buyCake()
+  actions.buyIceCream()
+  ```
+  _Note:
+
+  _In Redux, action creators simply return an action:_
 
 
   ## Multiple Reducers
