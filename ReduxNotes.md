@@ -252,31 +252,31 @@ __Thus Ultimately__ :
 
   Defining Reducer
   ```js
-  const reducer = (state = initialState, action) => {
+  const cakeReducer = (state = initialCakeState, action) => {
     switch(action.type) {
       case BUY_CAKE: return {
         ...state,
         numOfCakes: state.numOfCakes - 1
       }
+      default: return state
+    }
+  }
+
+  const iceCreamReducer = (state = initialIceCreamState, action) => {
+    switch(action.type) {
       case BUY_ICECREAM: return {
         ...state,
         numOfIceCreams: state.numOfIceCreams - 1
       }
       default: return state
     }
-  } 
+  }
+
   ```
 
-  Calling the action creator
-  ```js
-  store.dispatch(buyIceCream());
-  ```
 
   __This method is great when we have less number of products or states . But in the long run this will result in a very large reducer function which is hard to read and debug. The other approach is to split the intialState objects .__
 
-
-
-  ## Combining reducers
 
   ```js
   const initialCakeState = {
@@ -287,6 +287,9 @@ __Thus Ultimately__ :
     numOfIceCreams: 20
   }
   ```
+
+  ## Combining reducers
+
   
   ```js
   const cakeReducer = (state = initialCakeState, action) => {
@@ -320,7 +323,7 @@ __Thus Ultimately__ :
   })
   ```
 
-  The combineReducers method  accepts an object as an argument and each key value pair in the object is an indivial reducer function. The key of the key value pair will be the name of the reducer function and the value will be the reducer function itself. 
+  The combineReducers method  accepts an object as an argument and each key value pair in the object is an individual reducer function. The key of the key value pair will be the name of the reducer function and the value will be the reducer function itself. 
 
   Now we have to create a store using the rootReducer.
 
@@ -419,10 +422,13 @@ __Thus Ultimately__ :
   store.dispatch(buyCake())
   ```
   
+### Combining Enhancers
 
+  _It is self evident that we can combine enhancers just like we combine reducers._
 
-
-
+  ```js
+  const store = createStore(reducer,compose(firstEnhancer,secondEnhancer));
+  ```
 
 # React-Redux
 
@@ -474,11 +480,11 @@ _Here the 'store' is the state managed my Redux . Redux Stores the state of your
 
 The `useSelector` hook lets you extract data from the Redux store state, using a selector function.
 
-```
+```js
   import { useSelector } from 'react-redux'
 ```
 
-```
+```js
   const counter = useSelector(state => state.counter.value)
 ```
 
@@ -486,18 +492,35 @@ The `useSelector` hook lets you extract data from the Redux store state, using a
 
 The `useDispatch` hook returns a reference to the dispatch function from the Redux store.
 
-```
+```js
   import { useDispatch } from 'react-redux'
 ```
 
-```
+```js
   const dispatch = useDispatch()
 ```
 
 This dispatch function is what we use to dispatch actions to the Redux store.It is similar to the Reducer function in the useReducer hook.
 
-```
+```js
   dispatch(increment())
 ```
 
+### connect
+
+The `connect` function connects a React component to a Redux store.
+
+```js
+  import { connect } from 'react-redux'
+```
+
+```js
+  const ConnectedCounter = connect(mapState, mapDispatch)(Counter)
+```
+
+### useSelector vs connect
+
+`useSelector` is a hook that you can use to extract data from the Redux store state. It takes a selector function as an argument, and returns the data that the selector selects from the Redux store state.
+
+`connect` is a higher-order function that you can use to connect React components to a Redux store. It takes two arguments: `mapStateToProps` and `mapDispatchToProps`. It returns a function that takes a component and returns a new component that is connected to the Redux store.
 
