@@ -430,6 +430,24 @@ __Thus Ultimately__ :
   const store = createStore(reducer,compose(firstEnhancer,secondEnhancer));
   ```
 
+## Middleware
+
+  _Middleware is the suggested way to extend Redux with custom functionality. Middleware lets you wrap the store's dispatch method for fun and profit. The key feature of middleware is that it is composable. Multiple middleware can be combined together, where each middleware requires no knowledge of what comes before or after it in the chain._
+
+  ### Redux-Logger
+
+  _Redux-Logger is a middleware that logs the state changes in the application._
+
+  ```js
+  import {createStore, applyMiddleware} from 'redux'
+  import logger from 'redux-logger'
+
+  const store = createStore(reducer,applyMiddleware(logger));
+  ```
+  Thus we can see that the state of the application is changing as we dispatch actions to the store.
+
+
+
 # React-Redux
 
 ## Installation
@@ -524,3 +542,70 @@ The `connect` function connects a React component to a Redux store.
 
 `connect` is a higher-order function that you can use to connect React components to a Redux store. It takes two arguments: `mapStateToProps` and `mapDispatchToProps`. It returns a function that takes a component and returns a new component that is connected to the Redux store.
 
+
+
+# Redux Toolkit
+
+## Installation
+
+```
+  npm install @reduxjs/toolkit
+```
+
+## Getting Started
+
+### configureStore
+
+The `configureStore` function from Redux Toolkit wraps createStore to provide simplified configuration options and good defaults.
+
+```js
+  import { configureStore } from '@reduxjs/toolkit'
+```
+
+```js
+  const store = configureStore({ reducer: counterReducer })
+```
+This store variable is passed to the Provider component.
+
+### createSlice
+
+The `createSlice` function from Redux Toolkit wraps `createReducer` and `createAction` to provide simplified configuration options and good defaults.
+
+```js
+  import { createSlice } from '@reduxjs/toolkit'
+```
+
+```js
+  const counterSlice = createSlice({
+    name: 'counter',
+    initialState: 0,
+    reducers: {
+      increment: (state) => state + 1,
+      decrement: (state) => state - 1,
+    },
+  })
+```
+
+ 
+### createApi
+
+The `createApi` function from Redux Toolkit wraps the `createSlice` function to provide simplified configuration options and good defaults.
+
+```js
+  import { createApi } from '@reduxjs/toolkit'
+```
+
+```js
+  const counterApi = createApi({
+    reducerPath: 'counterApi',
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://example.com/' }),
+    endpoints: (builder) => ({
+      getPost: builder.query({
+        query: (postId) => `posts/${postId}`,
+      }),
+    }),
+  })
+ ```
+
+
+ 
