@@ -193,6 +193,9 @@ __Thus Ultimately__ :
   ```
   Thus we can see that the state of the application is changing as we dispatch actions to the store.
 
+
+  ![Image](assets/Screenshot%202023-08-17%20175540.png)
+
   ## Bind Action Creators
 
   As you might have realised , using store.dispatch() to dispatch an action every time is a bit cumbersome. So we use action creators to create action objects. But we still have to dispatch the action object using store.dispatch().
@@ -446,6 +449,146 @@ __Thus Ultimately__ :
   ```
   Thus we can see that the state of the application is changing as we dispatch actions to the store.
 
+  ## Async Actions
+
+  ### Synchronous Action
+
+  _An action is synchronous if the action is immediately dispatched._
+
+  Consider the cake shop example. If the customer places an order and the cake is delivered immediately then it is a synchronous action.
+
+  ### Asynchronous Action
+
+  _An action is asynchronous if the action is dispatched after an API call or after a timeout._
+
+  Consider the cake shop example. If the customer places an order and the cake is delivered after 5 minutes then it is an asynchronous action.
+
+  __Now for learning we will learn some technical terms which will help us in understanding the concept of asynchronous actions.__
+
+  #### State 
+
+  ```js
+    state= {
+      loading: false,
+      data: [],
+      error: ''
+    }
+  ```
+
+  Here the state is an object which has three properties: loading, data and error.
+
+  Loading - This property is used to indicate whether the data is being fetched from the server or not. If the data is being fetched then the value of this property will be true else it will be false.
+
+  Data - This property is used to store the data fetched from the server.
+
+  Error - This property is used to store the error message if the data is not fetched from the server.
+
+  #### Action
+
+  ```js
+    {
+      type: FETCH_USERS_REQUEST
+    }
+  ```
+
+  Here the action is an object which has a type property. The type property is used to indicate the type of action being performed.
+
+  FETCH_USERS_REQUEST - This action is dispatched when the data is being fetched from the server.  
+  FETCH_USERS-SUCCESS - This action is dispatched when the data is fetched successfully from the server.  
+  FETCH_USERS_FAILURE - This action is dispatched when the data is not fetched from the server.
+
+  #### Reducer
+
+  ```js
+    const initialState = {
+      loading: false,
+      users : [],
+      error: ''
+    }
+
+    const reducer = (state = initialState, action) => {
+      switch(action.type) {
+        case FETCH_USERS_REQUEST: return {
+          ...state,
+          loading: true
+        }
+        case FETCH_USERS_SUCCESS: return {
+          loading: false,
+          users: action.payload,
+          error: ''
+        }
+        case FETCH_USERS_FAILURE: return {
+          loading: false,
+          users: [],
+          error: action.payload
+        }
+      }
+    }
+  ```
+
+  ###  Redux Thunk
+
+  _Redux Thunk is a middleware that lets you call action creators that return a function instead of an action object. That function receives the store's dispatch method, which is then used to dispatch regular synchronous actions inside the function's body once the asynchronous operations have been completed._
+
+  ```js
+  import {createStore, applyMiddleware} from 'redux'
+  import thunk from 'redux-thunk'
+  import logger from 'redux-logger'
+  import {composeWithDevTools} from 'redux-devtools-extension'
+
+  const store = createStore(reducer,composeWithDevTools(applyMiddleware(logger,thunk)));
+  ```
+  Thus we can see that the state of the application is changing as we dispatch actions to the store.
+
+### Async action creators
+
+  There are two packages we need
+
+  * redux-thunk
+  * axios
+
+  ```js
+  import axios from 'axios'
+  import {FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE} from './userTypes'
+
+  export const fetchUsersRequest = () => {
+    return {
+      type: FETCH_USERS_REQUEST
+    }
+  }
+
+  export const fetchUsersSuccess = (users) => {
+    return {
+      type: FETCH_USERS_SUCCESS,
+      payload: users
+    }
+  }
+
+  export const fetchUsersFailure = (error) => {
+    return {
+      type: FETCH_USERS_FAILURE,
+      payload: error
+    }
+  }
+
+  export const fetchUsers = () => {
+    return (dispatch) => {
+      dispatch(fetchUsersRequest())
+      axios.get('https://jsonplaceholder.typicode.com/users')
+        .then(response => {
+          // response.data is the array of users
+          const users = response.data.map(user => user.id)
+          dispatch(fetchUsersSuccess(users))
+        })
+        .catch(error => {
+          // error.message is the error description
+          dispatch(fetchUsersFailure(error.message))
+        })
+    }
+  }
+  ```
+
+
 
 
 # React-Redux
@@ -476,12 +619,12 @@ npx create-next-app --example with-redux my-app
 
 The `<Provider>` component makes the Redux store available to any nested components that need to access the Redux store.
 
-```
+```js
   import { Provider } from 'react-redux'
   import store from './store'
 ```
 
-```
+```js
 
   root.render(
     <Provider store={store}>
