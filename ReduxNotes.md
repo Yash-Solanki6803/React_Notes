@@ -725,7 +725,7 @@ The `useDispatch` hook returns a reference to the dispatch function from the Red
 ```
 
 ```js
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() 
 ```
 
 This dispatch function is what we use to dispatch actions to the Redux store.It is similar to the Reducer function in the useReducer hook.
