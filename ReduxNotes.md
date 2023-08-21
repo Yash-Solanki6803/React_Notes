@@ -676,14 +676,63 @@ The `connect` function connects a React component to a Redux store.
 ```
 
 ```js
-  const ConnectedCounter = connect(mapState, mapDispatch)(Counter)
+  const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter)
 ```
+
+#### mapStateToProps
+
+The `mapStateToProps` function is used to map the state of the Redux store to the props of the React component.
+
+```js
+  const mapStateToProps = (state) => {
+    return {
+      //these are the props of the component
+      //in advance projects , a separate file is maintained called as selectors which contains the selector functions that return the prop to the component which here is the "state.counter"
+      counter: state.counter
+     }
+  }
+```
+
+#### mapDispatchToProps
+
+The `mapDispatchToProps` function is used to map the dispatch function to the props of the React component.
+
+```js
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      increment: () => dispatch(increment()),
+      decrement: () => dispatch(decrement()),
+      reset: () => dispatch(reset())
+    }
+  }
+```
+
+ 
 
 ### useSelector vs connect
 
 `useSelector` is a hook that you can use to extract data from the Redux store state. It takes a selector function as an argument, and returns the data that the selector selects from the Redux store state.
 
 `connect` is a higher-order function that you can use to connect React components to a Redux store. It takes two arguments: `mapStateToProps` and `mapDispatchToProps`. It returns a function that takes a component and returns a new component that is connected to the Redux store.
+
+
+### useDispatch
+
+The `useDispatch` hook returns a reference to the dispatch function from the Redux store.
+
+```js
+  import { useDispatch } from 'react-redux'
+```
+
+```js
+  const dispatch = useDispatch()
+```
+
+This dispatch function is what we use to dispatch actions to the Redux store.It is similar to the Reducer function in the useReducer hook.
+
+```js
+  dispatch(increment())
+``` 
 
 
 
