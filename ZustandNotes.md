@@ -163,10 +163,6 @@
   ```
   Here the persist middleware will enable the persist store for the store. This means that you can persist the store to local storage. This is very useful because it allows you to persist the store to local storage and restore it when the page is reloaded.
 
-  ### combine
 
-  ```js
-
-  import {combine} from 'zustand/middleware'
 
     
